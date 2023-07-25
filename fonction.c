@@ -1,14 +1,36 @@
-<<<<<<< HEAD
 #include "main.h"
+#include <stdarg.h>
+#include <unistd.h>
 
+/************************* PRINT CHAR *************************/
 
+/**
+ * print_char - Prints a char
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: Width
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_char(va_list types, char buffer[],int flags, int width, int precision, int size)
 {
 	char c = va_arg(types, int);
 
 	return (handle_write_char(c, buffer, flags, width, precision, size));
 }
-
+/************************* PRINT A STRING *************************/
+/**
+ * print_string - Prints a string
+ * @types: List a of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_string(va_list types, char buffer[],int flags, int width, int precision, int size)
 {
 	int length = 0, i;
@@ -50,9 +72,19 @@ int print_string(va_list types, char buffer[],int flags, int width, int precisio
 		}
 	}
 
-	return (write(1, str, length)):
+	return (write(1, str, length));
 }
-
+/************************* PRINT PERCENT SIGN *************************/
+/**
+ * print_percent - Prints a percent sign
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_percent(va_list types, char buffer[],int flags, int width, int precision, int size)
 {
 	UNUSED(types);
@@ -64,7 +96,17 @@ int print_percent(va_list types, char buffer[],int flags, int width, int precisi
 	return (write(1, "%%", 1));
 }
 
-
+/************************* PRINT INT *************************/
+/**
+ * print_int - Print int
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
 int print_int(va_list types, char buffer[],int flags, int width, int precision, int size)
 {
 	int i = BUFF_SIZE - 2;
@@ -142,43 +184,3 @@ int print_binary(va_list types, char buffer[],int flags, int width, int precisio
 	return (count);
 }
 
-=======
-#include <limits.h>
-#include <stdio.h>
-#include "main.h"
-
-int main(void)
-{
-	int len;
-	int len2;
-	unsigned int ui;
-	void *addr;
-
-	len = _printf("Let's try to printf a simple sentence.\n");
-	len2 = printf("Let's try to printf a simple sentence.\n");
-	ui = (unsigned int)INT_MAX + 1024;
-	addr = (void *)0x7ffe637541f0;
-	_printf("Length:[%d, %i]\n", len, len);
-	printf("Length:[%d, %i]\n", len2, len2);
-	_printf("Negative:[%d]\n", -762534);
-	printf("Negative:[%d]\n", -762534);
-	_printf("Unsigned:[%u]\n", ui);
-	printf("Unsigned:[%u]\n", ui);
-	_printf("Unsigned octal:[%o]\n", ui);
-	printf("Unsigned octal:[%o]\n", ui);
-	_printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
-	printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
-	_printf("Character:[%c]\n", 'H');
-	printf("Character:[%c]\n", 'H');
-	_printf("String:[%s]\n", "I am a string !");
-	printf("String:[%s]\n", "I am a string !");
-	_printf("Address:[%p]\n", addr);
-	printf("Address:[%p]\n", addr);
-	len = _printf("Percent:[%%]\n");
-	len2 = printf("Percent:[%%]\n");
-	_printf("Len:[%d]\n", len);
-	printf("Len:[%d]\n", len2);_printf("Unknown:[%r]\n");
-	printf("Unknown:[%r]\n");
-	return (0);
-}
->>>>>>> 62d934255709879e50f5651bf0c11c4fedddad48
