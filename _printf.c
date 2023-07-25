@@ -4,53 +4,62 @@
 
 int _printf(const char *format, ...)
 {
-	int count = 0;
-	char ch = *format;
-	va_list args;
-	va_start(args, format);
+    int count = 0;	
+    va_list args;
+    va_start(args, format);
+  
+    int i;
 
-	if (ch == '\0')
-		return (count);
+    for (i = 0; format[i] != '\0'; i++)
+    {
+        if (format[i] != '%')
+        {
+            putchar(format[i]);
+            count++;
+        }
+        else
+        {
+            i++;
+            if (format[i] == 'c')
+            {
+                int c = va_arg(args, int);
+                putchar(c);
+                count++;
+            }
+            else if (format[i] == 's')
+            {
+                char *str = va_arg(args, char*);
+                int j;
+                for (j = 0; str[j] != '\0'; j++)
+                {
+                    putchar(str[j]);
+                    count++;
+                }
+            }
+            else if (format[i] == '%')
+            {
+                putchar('%');
+                count++;
+            }
+            else if (format[i] == 'r')
+            {
+                char *str = va_arg(args, char*);
+                int j;
+                for (j = 0; str[j] != '\0'; j++) {}
+                for (j = j - 1; j >= 0; j--)
+                {
+                    putchar(str[j]);
+                    count++;
+                }
+            }
+            else
+            {
+                putchar('%');
+                putchar(format[i]);
+                count += 2;
+            }
+        }
+    }
 
-	if (ch == '%')
-	{
-		format++;
-		ch = *format;
-
-		if (ch == 'c')
-		{
-			putchar(va_arg(args, int));
-			count++;
-		}
-		else if (ch == 's')
-		{
-			char *str = va_arg(args, char *);
-			int i;
-			for (i = 0; str[i] != '\0'; i++)
-			{
-				putchar(str[i]);
-				count++;
-			}
-		}
-		else if (ch == '%')
-		{
-			putchar('%');
-			count++;
-		}
-		else
-		{
-			putchar('%');
-			putchar(ch);
-			count += 2;
-		}
-	}
-	else
-	{
-		putchar(ch);
-		count++;
-	}
-
-	va_end(args);
-
-	return (count);
-}
+    va_end(args);
+    return count;
